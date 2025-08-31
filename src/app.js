@@ -3,7 +3,8 @@ const dotenv = require("dotenv").config();
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
 const swaggerDoc = YAML.load("./swagger.yaml");
-const connectDB = require("./db");
+const connectDB = require("./db/db");
+const User = require("./models/User");
 
 // express app
 const app = express();
