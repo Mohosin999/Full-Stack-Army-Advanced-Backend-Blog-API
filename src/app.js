@@ -1,15 +1,11 @@
+require("dotenv").config();
 const express = require("express");
-const dotenv = require("dotenv").config();
-const swaggerUI = require("swagger-ui-express");
-const YAML = require("yamljs");
-const swaggerDoc = YAML.load("./swagger.yaml");
 const connectDB = require("./db/db");
-const User = require("./models/User");
+const applyMiddleware = require("./middleware");
 
-// express app
 const app = express();
-app.use(express.json());
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+
+applyMiddleware(app);
 
 app.get("/health", (_req, res) => {
   res.status(200).json({
