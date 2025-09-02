@@ -4,12 +4,12 @@ const connectDB = require("./db/db");
 const applyMiddleware = require("./middleware");
 
 const app = express();
-
 applyMiddleware(app);
 
-app.get("/health", (_req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({
     health: "OK",
+    user: req.user,
   });
 });
 
