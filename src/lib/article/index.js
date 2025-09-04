@@ -3,13 +3,16 @@ const { Article } = require("../../model");
 const findAll = async ({
   page = 1,
   limit = 10,
-  sortType = "dsc",
+  sortType = "desc",
   sortBy = "updatedAt",
   search = "",
 }) => {
-  const sortStr = `${sortType === "dsc" ? "-" : ""}${sortBy}`;
+  const sortStr = `${sortType === "desc" ? "-" : ""}${sortBy}`;
+  console.log(sortStr);
 
-  const articles = await Article.find()
+  const articles = await Article.find({
+    title: { $regex: search, $options: "i" },
+  })
     .sort(sortStr)
     .skip(page * limit - limit)
     .limit(limit);

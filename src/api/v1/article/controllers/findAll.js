@@ -3,7 +3,7 @@ const articleService = require("../../../../lib/article");
 const findAll = async (req, res, next) => {
   const page = req.query.page || 1;
   const limit = req.query.limit || 10;
-  const sortType = req.query.sort_type || "dsc";
+  const sortType = req.query.sort_type || "desc";
   const sortBy = req.query.sort_by || "updatedAt";
   const search = req.query.search || "";
 
