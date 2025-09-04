@@ -1,6 +1,9 @@
 const { Article } = require("../../model");
 
-const findAll = async ({
+/**
+ * Find all articles
+ */
+const findAll = ({
   page = 1,
   limit = 10,
   sortType = "desc",
@@ -8,18 +11,33 @@ const findAll = async ({
   search = "",
 }) => {
   const sortStr = `${sortType === "desc" ? "-" : ""}${sortBy}`;
-  console.log(sortStr);
-
-  const articles = await Article.find({
+  const filter = {
     title: { $regex: search, $options: "i" },
-  })
-    .sort(sortStr)
-    .skip(page * limit - limit)
-    .limit(limit);
+  };
 
-  return articles;
+  return (
+    Article.find(filter)
+      // .populate({ path: "author", select: "name" })
+      .sort(sortStr)
+      .skip(page * limit - limit)
+      .limit(limit)
+  );
 };
 
+/**
+ * Count (total articles)
+ */
+const count = ({ search = "" }) => {
+  const filter = {
+    title: { $regex: search, $options: "i" },
+  };
+
+  return Article.countDocuments(filter);
+};
+
+/**
+ * Create articles
+ */
 const create = ({ title, body = "", cover = "", status = "draft", author }) => {
   if (!title || !author) {
     const error = new Error("Invalid parameters");
@@ -38,4 +56,4 @@ const create = ({ title, body = "", cover = "", status = "draft", author }) => {
   return article.save();
 };
 
-module.exports = { findAll, create };
+module.exports = { findAll, create, count };

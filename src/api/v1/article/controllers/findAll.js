@@ -8,6 +8,7 @@ const findAll = async (req, res, next) => {
   const search = req.query.search || "";
 
   try {
+    // data
     const articles = await articleService.findAll({
       page,
       limit,
@@ -15,8 +16,36 @@ const findAll = async (req, res, next) => {
       sortBy,
       search,
     });
+    const data = articles.map((article) => ({
+      ...article._doc,
+      link: `/articles/${article.id}`,
+    }));
 
-    res.status(200).json(articles);
+    // pagination
+    const totalItems = await articleService.count({ search });
+    const totalPage = Math.ceil(totalItems / limit);
+
+    const pagination = {
+      page,
+      limit,
+      totalItems,
+      totalPage,
+    };
+
+    if (page < totalPage) {
+      pagination.next = page + 1;
+    }
+
+    if (page > 1) {
+      pagination.prev = page - 1;
+    }
+
+    // HATEOAS links
+    const links = {
+      self: req.url,
+    };
+
+    res.status(200).json({ data, pagination });
   } catch (error) {
     next(error);
   }
