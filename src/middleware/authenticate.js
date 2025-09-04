@@ -1,8 +1,11 @@
 const authenticate = (req, _res, next) => {
   req.user = {
-    id: 1,
-    name: "Mohosin",
+    id: "aadffa121afaa",
+    name: "Mohosin Hasan",
+    email: "mohosin@hasan",
+    role: "user",
   };
+
   next();
 };
 

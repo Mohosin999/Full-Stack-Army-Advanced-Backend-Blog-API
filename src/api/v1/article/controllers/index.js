@@ -1,3 +1,4 @@
 const findAll = require("./findAll");
+const create = require("./create");
 
-module.exports = { findAll };
+module.exports = { findAll, create };
