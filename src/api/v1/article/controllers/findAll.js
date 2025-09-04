@@ -1,5 +1,13 @@
 const articleService = require("../../../../lib/article");
 
+const generateQueryString = (query) => {
+  return Object.keys(query)
+    .map(
+      (key) => encodeURIComponent(key) + "=" + encodeURIComponent(query[key])
+    )
+    .join("&");
+};
+
 const findAll = async (req, res, next) => {
   const page = req.query.page || 1;
   const limit = req.query.limit || 10;
@@ -45,7 +53,17 @@ const findAll = async (req, res, next) => {
       self: req.url,
     };
 
-    res.status(200).json({ data, pagination });
+    if (pagination.next) {
+      const query = generateQueryString({ ...req.query, page: page + 1 });
+      links.next = `${req.path}?${query}`;
+    }
+
+    if (pagination.prev) {
+      const query = generateQueryString({ ...req.query, page: page - 1 });
+      links.prev = `${req.path}?${query}`;
+    }
+
+    res.status(200).json({ data, pagination, links });
   } catch (error) {
     next(error);
   }
