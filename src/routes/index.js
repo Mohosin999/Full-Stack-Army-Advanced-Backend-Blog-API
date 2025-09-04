@@ -1,8 +1,9 @@
 const router = require("express").Router();
+const { controllers: articleController } = require("../api/v1/article");
 
 router
   .route("/api/v1/articles")
-  .get((req, res) => {})
+  .get(articleController.findAll)
   .post((req, res) => {});
 
 router
