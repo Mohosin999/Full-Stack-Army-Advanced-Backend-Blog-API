@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  version: '1.0.0'
-  title: 'FSArmy - My Blog API'
-  description: 'This is the first professional project that I creating in Full Stack Army. This is a simple Blog API Application where anyone can create their blog.'
+  version: "1.0.0"
+  title: "FSArmy - My Blog API"
+  description: "This is the first professional project that I creating in Full Stack Army. This is a simple Blog API Application where anyone can create their blog."
   contact:
     name: FS Army
     url: https://fsarmy.com
@@ -13,7 +13,7 @@ servers:
     url: "https://virtserver.swaggerhub.com/mohosin/fs-army-myblog-api/1.0.0"
   - description: Dev
     url: "http://localhost:4000/api/v1"
-tags: 
+tags:
   - name: Auth
     description: Authentication Endpoints (public)
   - name: Article
@@ -23,17 +23,17 @@ tags:
   - name: User
     description: User Endpoints (admin only)
 paths:
-  '/auth/signup':
+  "/auth/signup":
     post:
       description: Create a New Account
       tags: [Auth]
       requestBody:
         content:
-          'application/json':
+          "application/json":
             schema:
               type: object
               properties:
-                name: 
+                name:
                   type: string
                   example: Mohosin Hasa Akash
                 email:
@@ -46,10 +46,10 @@ paths:
                   example: PassWord0022
               required: [name, email, password]
       responses:
-        '201':
+        "201":
           description: Signup Successfull
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: object
                 properties:
@@ -65,27 +65,27 @@ paths:
                     properties:
                       access_token:
                         type: string
-                        example: '21545saf4D5EV1fw54aDA21f5a4we4DS545a45sf43a3a3faaa21CVDW545saf451fw54SSa21f5a4we4545aE45sf43a3a3fFCVADFaaa'
+                        example: "21545saf4D5EV1fw54aDA21f5a4we4DS545a45sf43a3a3faaa21CVDW545saf451fw54SSa21f5a4we4545aE45sf43a3a3fFCVADFaaa"
                   links:
                     type: object
                     properties:
                       self:
                         type: string
-                        example: '/auth/signup'
+                        example: "/auth/signup"
                       signin:
                         type: string
-                        example: '/auth/signin'
-        '400':
-          $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'
-  '/auth/signin':
+                        example: "/auth/signin"
+        "400":
+          $ref: "#/components/responses/400"
+        "500":
+          $ref: "#/components/responses/500"
+  "/auth/signin":
     post:
       description: Login to Your Account
       tags: [Auth]
       requestBody:
         content:
-          'application/json':
+          "application/json":
             schema:
               type: object
               properties:
@@ -99,10 +99,10 @@ paths:
                   example: PassWord0022
               required: [email, password]
       responses:
-        '200':
+        "200":
           description: Signin Successfull
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: object
                 properties:
@@ -118,32 +118,32 @@ paths:
                     properties:
                       access_token:
                         type: string
-                        example: '21545saf4D5EV1fw54aDA21f5a4we4DS545a45sf43a3a3faaa21CVDW545saf451fw54SSa21f5a4we4545aE45sf43a3a3fFCVADFaaa'
+                        example: "21545saf4D5EV1fw54aDA21f5a4we4DS545a45sf43a3a3faaa21CVDW545saf451fw54SSa21f5a4we4545aE45sf43a3a3fFCVADFaaa"
                   links:
                     type: object
                     properties:
                       self:
                         type: string
-                        example: '/auth/signin'
-        '400':
-          $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'
-  '/articles':
+                        example: "/auth/signin"
+        "400":
+          $ref: "#/components/responses/400"
+        "500":
+          $ref: "#/components/responses/500"
+  "/articles":
     get:
       tags: [Article]
       description: Retrive all published articles
       parameters:
-        - $ref: '#/components/parameters/pageParam'
-        - $ref: '#/components/parameters/limitParam'
-        - $ref: '#/components/parameters/sortTypeParam'
-        - $ref: '#/components/parameters/sortByParam'
-        - $ref: '#/components/parameters/searchParam'
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/sortTypeParam"
+        - $ref: "#/components/parameters/sortByParam"
+        - $ref: "#/components/parameters/searchParam"
       responses:
-        '200':
+        "200":
           description: Return a list of articles
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: object
                 properties:
@@ -163,36 +163,36 @@ paths:
                             cover:
                               type: string
                               format: url
-                              example: 'https://s3.aws.com/ka.jpg'
+                              example: "https://s3.aws.com/ka.jpg"
                             author:
-                              $ref: '#/components/schemas/AuthorDTO'
+                              $ref: "#/components/schemas/AuthorDTO"
                             link:
                               type: string
                               format: url
-                              example: '/articles/1'
+                              example: "/articles/1"
                           required: [id, title, author]
-                        - $ref: '#/components/schemas/Timestamp'
+                        - $ref: "#/components/schemas/Timestamp"
                   pagination:
-                    $ref: '#/components/schemas/Pagination'
+                    $ref: "#/components/schemas/Pagination"
                   links:
                     type: object
                     properties:
                       self:
                         type: string
                         format: url
-                        example: '/articles?page=2&limit=10'
+                        example: "/articles?page=2&limit=10"
                       next:
                         type: string
                         format: url
-                        example: '/articles?page=3&limit=10'
+                        example: "/articles?page=3&limit=10"
                       prev:
                         type: string
                         format: url
-                        example: '/articles?page=1&limit=10'
-        '400':
-          $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'
+                        example: "/articles?page=1&limit=10"
+        "400":
+          $ref: "#/components/responses/400"
+        "500":
+          $ref: "#/components/responses/500"
     post:
       operationId: createPost
       security:
@@ -202,7 +202,7 @@ paths:
       requestBody:
         description: To create a new article user must need to provide valid data
         content:
-          'application/json':
+          "application/json":
             schema:
               type: object
               properties:
@@ -223,19 +223,19 @@ paths:
                   example: draft
               required: [title, body]
       responses:
-        '201':
+        "201":
           description: Successfully created a new article
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ArticleCreateDTO'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '500':
-          $ref: '#/components/responses/500'
-  '/articles/{id}':
+                $ref: "#/components/schemas/ArticleCreateDTO"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+  "/articles/{id}":
     get:
       tags: [Article]
       description: Fetch a single article
@@ -246,46 +246,46 @@ paths:
           description: Expand author and comment object
           schema:
             type: string
-            example: 'author, comment'
+            example: "author, comment"
       responses:
-        '200':
+        "200":
           description: Single article view
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: object
                 properties:
                   data:
                     allOf:
-                      - $ref: '#/components/schemas/Article'
+                      - $ref: "#/components/schemas/Article"
                       - type: object
                         properties:
                           author:
-                            $ref: '#/components/schemas/AuthorDTO'
+                            $ref: "#/components/schemas/AuthorDTO"
                       - type: object
                         properties:
                           comments:
                             type: array
                             items:
-                                $ref: '#/components/schemas/Comment'
+                              $ref: "#/components/schemas/Comment"
                   links:
                     type: object
                     properties:
                       self:
                         type: string
-                        example: '/articles/1'
+                        example: "/articles/1"
                       author:
                         type: string
-                        example: 'articles/1/author'
+                        example: "articles/1/author"
                       comments:
                         type: string
-                        example: 'articles/1/comments'
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
+                        example: "articles/1/comments"
+        "400":
+          $ref: "#/components/responses/400"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
     put:
       security:
         - bearerAuth: []
@@ -295,7 +295,7 @@ paths:
         - $ref: "#/components/parameters/idPathParam"
       requestBody:
         content:
-          'application/json':
+          "application/json":
             schema:
               type: object
               properties:
@@ -313,31 +313,31 @@ paths:
                 cover:
                   type: string
                   format: url
-                  example: 'https://myblog.com'
+                  example: "https://myblog.com"
                 status:
                   type: string
                   enum: [draft, published]
                   example: draft
               required: [title, body]
       responses:
-        '200':
+        "200":
           description: Successfully updated
           content: &article_update_content
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ArticleUpdateDTO'
-        '201':
+                $ref: "#/components/schemas/ArticleUpdateDTO"
+        "201":
           description: Successfully created
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ArticleCreateDTO'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '500':
-          $ref: '#/components/responses/500'
+                $ref: "#/components/schemas/ArticleCreateDTO"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
     patch:
       security:
         - bearerAuth: []
@@ -347,7 +347,7 @@ paths:
         - $ref: "#/components/parameters/idPathParam"
       requestBody:
         content:
-          'application/json':
+          "application/json":
             schema:
               type: object
               properties:
@@ -365,45 +365,42 @@ paths:
                 cover:
                   type: string
                   format: url
-                  example: 'https://myblog.com'
+                  example: "https://myblog.com"
                 status:
                   type: string
                   enum: [draft, published]
                   example: draft
       responses:
-        '200':
+        "200":
           description: Successfully updated
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ArticleUpdateDTO'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
+                $ref: "#/components/schemas/ArticleUpdateDTO"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
     delete:
       security:
         - bearerAuth: []
       tags: [Article]
       description: Delete an article by id
       parameters:
-        - $ref: '#/components/parameters/idPathParam'
+        - $ref: "#/components/parameters/idPathParam"
       responses:
-        '204':
+        "204":
           description: Article deleted successfully
-        '401':
-          $ref: '#/components/responses/401'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
-
-
-
+        "401":
+          $ref: "#/components/responses/401"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
 
 components:
   securitySchemes:
@@ -440,7 +437,7 @@ components:
               enum: [draft, published]
               example: draft
           required: [id, authorId, title, body, status]
-        - $ref: '#/components/schemas/Timestamp'
+        - $ref: "#/components/schemas/Timestamp"
     ArticleCreateDTO:
       type: object
       properties:
@@ -452,22 +449,22 @@ components:
           type: string
           example: Article created successfully
         data:
-          $ref: '#/components/schemas/Article'
+          $ref: "#/components/schemas/Article"
         links:
           type: object
           properties:
             self:
               type: string
               format: url
-              example: '/articles/1'
+              example: "/articles/1"
             author:
               type: string
               format: url
-              example: '/articles/1/author'
+              example: "/articles/1/author"
             comments:
               type: string
               format: url
-              example: '/articles/1/comments'
+              example: "/articles/1/comments"
     ArticleUpdateDTO:
       type: object
       properties:
@@ -479,13 +476,13 @@ components:
           type: string
           example: Article updated successfully
         data:
-          $ref: '#/components/schemas/Article'
+          $ref: "#/components/schemas/Article"
         links:
           type: object
           properties:
             self:
               type: string
-              example: '/articles/1'
+              example: "/articles/1"
     Comment:
       allOf:
         - type: object
@@ -511,7 +508,7 @@ components:
               enum: [public, private]
               example: public
           required: [id, authorId, articleId, body, status]
-        - $ref: '#/components/schemas/Timestamp'
+        - $ref: "#/components/schemas/Timestamp"
     Timestamp:
       type: object
       properties:
@@ -566,10 +563,10 @@ components:
         - totalPage
         - totalItems
   responses:
-    '500':
+    "500":
       description: Internal Server Error
       content:
-        'application/json':
+        "application/json":
           schema:
             type: object
             properties:
@@ -583,10 +580,10 @@ components:
               message:
                 type: string
                 example: We are sorry for the inconvenience. Please try again later.
-    '400':
+    "400":
       description: Bad Request
       content:
-        'application/json':
+        "application/json":
           schema:
             type: object
             properties:
@@ -612,10 +609,10 @@ components:
                       type: string
                       enum: [body, query]
                       example: body
-    '401':
+    "401":
       description: Unauthorized
       content:
-        'application/json':
+        "application/json":
           schema:
             type: object
             properties:
@@ -629,10 +626,10 @@ components:
               message:
                 type: string
                 example: You don't have the right permissions.
-    '404':
+    "404":
       description: Resource Not Found
       content:
-        'application/json':
+        "application/json":
           schema:
             type: object
             properties:
