@@ -8,9 +8,6 @@ info:
     url: https://fsarmy.com
     email: contact@fsarmy.com
 servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: "https://virtserver.swaggerhub.com/mohosin/fs-army-myblog-api/1.0.0"
   - description: Dev
     url: "http://localhost:4000/api/v1"
 tags:
@@ -688,6 +685,5 @@ components:
       required: true
       description: Article ID
       schema:
-        type: integer
-        format: int32
-        example: 1
+        type: string
+        example: "68ba580912d4f708a9e21196"
