@@ -9,7 +9,7 @@ router
 router
   .route("/api/v1/articles/:id")
   .get(articleController.findSingleItem)
-  .put((req, res) => {})
+  .put(articleController.updateItem)
   .delete((req, res) => {});
 
 module.exports = router;
