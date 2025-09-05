@@ -121,7 +121,8 @@ const updateOrCreate = async (
 ) => {
   const article = await Article.findById(id);
   if (!article) {
-    throw notFound();
+    const article = await create({ title, body, cover, status, author });
+    return { article, code: 201 };
   }
 
   const payload = {
@@ -131,10 +132,10 @@ const updateOrCreate = async (
     status,
     author: author.id,
   };
-  article.replaceOne(payload);
+  article.overwrite(payload);
   await article.save();
 
-  return article;
+  return { article: { ...article._doc, id: article.id }, code: 200 };
 };
 
 module.exports = {

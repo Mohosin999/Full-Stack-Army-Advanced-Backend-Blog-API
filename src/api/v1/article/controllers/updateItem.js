@@ -6,7 +6,7 @@ const updateItem = async (req, res, next) => {
   const status = req.body.status || "draft";
 
   try {
-    const updatedArticle = await articleService.updateOrCreate(id, {
+    const { article, code } = await articleService.updateOrCreate(id, {
       title: req.body.title,
       body: req.body.body,
       author: req.user,
@@ -14,7 +14,19 @@ const updateItem = async (req, res, next) => {
       status,
     });
 
-    res.status(200).json(updatedArticle);
+    const response = {
+      code,
+      message:
+        code === 200
+          ? "Article Updated Successfully"
+          : "Article Created Successfully",
+      data: article,
+      links: {
+        self: `/articles/${article.id}`,
+      },
+    };
+
+    res.status(code).json(response);
   } catch (error) {
     next(error);
   }
