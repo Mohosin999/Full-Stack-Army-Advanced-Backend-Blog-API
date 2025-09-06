@@ -23,7 +23,7 @@ const findAll = async ({
   };
 
   const articles = await Article.find(filter)
-    // .populate({ path: "author", select: "name" })
+    .populate({ path: "author", select: "name" })
     .sort(sortStr)
     .skip(page * limit - limit)
     .limit(limit);
@@ -97,11 +97,15 @@ const findSingleItem = async ({ id, expand = "" }) => {
   }
 
   if (expand.includes("author")) {
-    await article.populate({ path: "author", select: "name" });
+    await article.populate({
+      path: "author",
+      select: "name",
+      strictPopulate: false,
+    });
   }
 
   if (expand.includes("comment")) {
-    await article.populate({ path: "comments" });
+    await article.populate({ path: "comments", strictPopulate: false });
   }
 
   return {
@@ -160,17 +164,17 @@ const updateProperties = async (id, { title, body, cover, status }) => {
   return { ...article._doc, id: article.id };
 };
 
-// const removeItem = async (id) => {
-//   const article = await Article.findById(id);
-//   if (!article) {
-//     throw notFound();
-//   }
+const removeItem = async (id) => {
+  const article = await Article.findById(id);
+  if (!article) {
+    throw notFound();
+  }
 
-//   // TODO:
-//   // Asynchronously Delete all associated comments
+  // TODO:
+  // Asynchronously Delete all associated comments
 
-//   return Article.findByIdAndDelete(id);
-// };
+  return Article.findByIdAndDelete(id);
+};
 
 // const checkOwnership = async ({ resourceId, userId }) => {
 //   const article = await Article.findById(resourceId);
@@ -189,4 +193,5 @@ module.exports = {
   findSingleItem,
   updateOrCreate,
   updateProperties,
+  removeItem,
 };

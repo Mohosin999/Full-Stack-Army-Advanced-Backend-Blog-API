@@ -11,6 +11,6 @@ router
   .get(articleController.findSingleItem)
   .put(articleController.updateItem)
   .patch(articleController.updateItemPatch)
-  .delete((req, res) => {});
+  .delete(articleController.removeItem);
 
 module.exports = router;
