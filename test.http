@@ -1,5 +1,11 @@
-PATCH http://localhost:4000/api/v2/articles/12145
+PATCH http://localhost:4000/api/v2/articles/68baf9d16fe1acb782379aaf
+Content-Type: application/json
 
 [
-    {"op": "replace", "path": "/name", "value":"Mohosin"}
+  { "op": "replace", "path": "title", "value": "JSON Patch" },
+  { "op": "replace", "path": "body", "value": "Updated body using json patch" },
+  { "op": "add", "path": "test", "value": "Test Property" },
+  { "op": "add", "path": "test2", "value": "Funny" },
+  { "op": "add", "path": "test3", "value": "Test" },
+  { "op": "add", "path": "test4", "value": 1000 }
 ]
