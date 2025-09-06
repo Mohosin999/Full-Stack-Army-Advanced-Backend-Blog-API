@@ -10,6 +10,7 @@ router
   .route("/api/v1/articles/:id")
   .get(articleController.findSingleItem)
   .put(articleController.updateItem)
+  .patch(articleController.updateItemPatch)
   .delete((req, res) => {});
 
 module.exports = router;

@@ -138,10 +138,55 @@ const updateOrCreate = async (
   return { article: { ...article._doc, id: article.id }, code: 200 };
 };
 
+/**
+ * Update properties (patch)
+ * @param {*} id
+ * @param {*} param1
+ * @returns
+ */
+const updateProperties = async (id, { title, body, cover, status }) => {
+  const article = await Article.findById(id);
+  if (!article) {
+    throw notFound();
+  }
+
+  const payload = { title, body, cover, status };
+
+  Object.keys(payload).forEach((key) => {
+    article[key] = payload[key] ?? article[key];
+  });
+
+  await article.save();
+  return { ...article._doc, id: article.id };
+};
+
+// const removeItem = async (id) => {
+//   const article = await Article.findById(id);
+//   if (!article) {
+//     throw notFound();
+//   }
+
+//   // TODO:
+//   // Asynchronously Delete all associated comments
+
+//   return Article.findByIdAndDelete(id);
+// };
+
+// const checkOwnership = async ({ resourceId, userId }) => {
+//   const article = await Article.findById(resourceId);
+//   if (!article) throw notFound();
+
+//   if (article._doc.author.toString() === userId) {
+//     return true;
+//   }
+//   return false;
+// };
+
 module.exports = {
   findAll,
   create,
   count,
   findSingleItem,
   updateOrCreate,
+  updateProperties,
 };
