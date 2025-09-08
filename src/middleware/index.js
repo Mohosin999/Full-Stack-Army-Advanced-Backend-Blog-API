@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
 const OpenApiValidator = require("express-openapi-validator");
@@ -8,6 +9,7 @@ const authenticate = require("./authenticate");
 
 const applyMiddleware = (app) => {
   app.use(cors());
+  app.use(morgan("dev"));
   app.use(express.json());
   app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
@@ -16,8 +18,6 @@ const applyMiddleware = (app) => {
       apiSpec: "./swagger.yaml",
     })
   );
-  // TODO: remove later, because we use it locally, not globally
-  app.use(authenticate);
 };
 
 module.exports = applyMiddleware;
