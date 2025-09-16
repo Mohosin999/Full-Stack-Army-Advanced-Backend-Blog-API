@@ -5,7 +5,7 @@ const ownership = require("../middleware/ownership");
 const { controllers: authController } = require("../api/v1/auth");
 const { controllers: articleController } = require("../api/v1/article");
 const { controllers: articleControllerV2 } = require("../api/v2/article");
-const { controllers: userController } = require("../api/v1/user");
+// const { controllers: userController } = require("../api/v1/user");
 
 // Auth routes
 router
@@ -39,9 +39,9 @@ router
   .patch(authenticate, articleControllerV2.updateItemPatch);
 
 // User routes
-router
-  .route("/api/v1/users")
-  .get(authenticate, authorize(["admin"]), userController.findAllItems)
-  .post(authenticate, authorize(["admin"]), userController.create);
+// router
+//   .route("/api/v1/users")
+// .get(authenticate, authorize(["admin"]), userController.findAllItems)
+// .post(authenticate, authorize(["admin"]), userController.create);
 
 module.exports = router;
